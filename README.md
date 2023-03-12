@@ -1,7 +1,13 @@
 # ms-application
 
 ## Запуск приложения
-Для локального запуска необходимо оздать бд:
+
+Создание контейнера с БД
+```
+docker run --name smart4it_db -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres
+```
+
+Создание БД на локальной машине
 ```sql
-create database defailt_db;
+create database smart4it_db;
 ```
