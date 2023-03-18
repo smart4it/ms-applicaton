@@ -1,4 +1,4 @@
-package ru.itstamag.application.repository;
+package ru.itstamag.application.dao.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -4,13 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.itstamag.application.repository.HhCounterEntity;
-import ru.itstamag.application.repository.HhCounterRepository;
+import ru.itstamag.application.dao.entity.Experience;
+import ru.itstamag.application.dao.entity.HhCounterEntity;
+import ru.itstamag.application.dao.repository.ExperienceRepository;
+import ru.itstamag.application.dao.repository.HhCounterRepository;
 import ru.itstamag.application.web.client.hh.HhClient;
+import ru.itstamag.application.web.client.hh.dto.DictionariesDto;
 import ru.itstamag.application.web.client.hh.dto.FoundDto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -20,6 +24,7 @@ public class HhScheduler {
 
     private final HhClient hhClient;
     private final HhCounterRepository hhCounterRepository;
+    private final ExperienceRepository experienceRepository;
 
     @Scheduled(cron = "0 0 0/6 * * ?")
     public void logInfo() {
@@ -29,5 +34,17 @@ public class HhScheduler {
                                                               LocalDate.now(), LocalTime.now());
         hhCounterRepository.save(hhCounterEntity);
         log.info("HhScheduler.logInfo() completed: counter = {}", hhCounterEntity);
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void experience() {
+        log.info("HhScheduler.experience() started");
+        DictionariesDto dictionaries = hhClient.dictionaries();
+        List<Experience> experiences = dictionaries.experience()
+                .stream()
+                .map(dto -> new Experience(dto.id(), dto.name()))
+                .toList();
+        experienceRepository.saveAll(experiences);
+        log.info("HhScheduler.experience() completed: data = {}", dictionaries.experience());
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.itstamag.application.repository.HhCounterEntity;
-import ru.itstamag.application.repository.HhCounterRepository;
+import ru.itstamag.application.dao.entity.HhCounterEntity;
+import ru.itstamag.application.dao.repository.HhCounterRepository;
 
 @Slf4j
 @RestController
