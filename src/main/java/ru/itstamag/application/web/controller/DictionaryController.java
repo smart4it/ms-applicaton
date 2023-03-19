@@ -5,21 +5,30 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.itstamag.application.dao.entity.Employment;
 import ru.itstamag.application.dao.entity.Experience;
+import ru.itstamag.application.service.EmploymentService;
 import ru.itstamag.application.service.ExperienceService;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/experience")
-public class ExperienceController {
+@RequestMapping("/dictionary")
+public class DictionaryController {
 
-    private final ExperienceService service;
+    private final ExperienceService experienceService;
+    private final EmploymentService employmentService;
 
     @CrossOrigin
-    @GetMapping
+    @GetMapping("/experience")
     public List<Experience> getAllExperiences() {
-        return service.findAll();
+        return experienceService.findAll();
+    }
+
+    @CrossOrigin
+    @GetMapping("/employment")
+    public List<Employment> getAllEmployment() {
+        return employmentService.findAll();
     }
 }
