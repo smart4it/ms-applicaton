@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itstamag.application.dao.entity.Employment;
 import ru.itstamag.application.dao.entity.Experience;
+import ru.itstamag.application.dao.entity.Schedule;
 import ru.itstamag.application.service.EmploymentService;
 import ru.itstamag.application.service.ExperienceService;
+import ru.itstamag.application.service.ScheduleService;
+import ru.itstamag.application.web.client.hh.dto.SchedulesDto;
 
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class DictionaryController {
 
     private final ExperienceService experienceService;
     private final EmploymentService employmentService;
+
+    private final ScheduleService scheduleService;
 
     @CrossOrigin
     @GetMapping("/experience")
@@ -31,4 +36,11 @@ public class DictionaryController {
     public List<Employment> getAllEmployment() {
         return employmentService.findAll();
     }
+
+    @CrossOrigin
+    @GetMapping("/schedules")
+    public List<SchedulesDto> schedules() {
+        return scheduleService.schedules();
+    }
+
 }
