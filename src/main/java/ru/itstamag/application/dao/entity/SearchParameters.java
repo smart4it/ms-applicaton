@@ -8,20 +8,20 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "searchParameters")
+@Table(name = "search_parameters")
 public class SearchParameters {
 
     @Id
-    @Column(length = 25)
-    private String id;
+    private UUID id;
 
-    @Column(length = 50)
+    @Column(length = 25)
     private String text;
 
     @ManyToOne
