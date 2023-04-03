@@ -8,19 +8,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.itstamag.application.dao.entity.Employment;
 import ru.itstamag.application.dao.entity.Experience;
-import ru.itstamag.application.dao.entity.HhCounterEntity;
 import ru.itstamag.application.dao.repository.EmploymentRepository;
 import ru.itstamag.application.dao.repository.ExperienceRepository;
-import ru.itstamag.application.dao.repository.HhCounterRepository;
+import ru.itstamag.application.service.HhCounterService;
 import ru.itstamag.application.service.ScheduleService;
 import ru.itstamag.application.web.client.hh.HhClient;
 import ru.itstamag.application.web.client.hh.dto.DictionariesDto;
-import ru.itstamag.application.web.client.hh.dto.FoundDto;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -28,20 +23,17 @@ import java.util.UUID;
 public class HhScheduler {
 
     private final HhClient hhClient;
-    private final HhCounterRepository hhCounterRepository;
+    private final HhCounterService hhCounterService;
     private final ExperienceRepository experienceRepository;
     private final EmploymentRepository employmentRepository;
 
     private final ScheduleService scheduleService;
 
     @Scheduled(cron = "0 0 0/6 * * ?")
-    public void logInfo() {
+    public void updateHhCounter() {
         log.info("HhScheduler.logInfo() started");
-        FoundDto vacancies = hhClient.vacancies();
-        HhCounterEntity hhCounterEntity = new HhCounterEntity(UUID.randomUUID(), vacancies.found().intValue(), "java",
-                                                              LocalDate.now(), LocalTime.now());
-        hhCounterRepository.save(hhCounterEntity);
-        log.info("HhScheduler.logInfo() completed: counter = {}", hhCounterEntity);
+        hhCounterService.saveHhCounterBySearchParameters();
+        log.info("HhScheduler.logInfo() completed: ");
     }
 
     @EventListener(ApplicationReadyEvent.class)
