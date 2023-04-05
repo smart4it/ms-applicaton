@@ -1,5 +1,6 @@
 package ru.itstamag.application.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "search_parameters")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchParameters {
 
     @Id
