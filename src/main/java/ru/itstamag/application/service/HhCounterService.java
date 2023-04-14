@@ -27,7 +27,7 @@ public class HhCounterService {
 
     public void saveHhCounterBySearchParameters() {
         SearchParameters parameters = searchParameters();
-        FoundDto vacancies = hhClient.vacancies(params(parameters));
+        FoundDto vacancies = hhClient.countVacancies(params(parameters));
 
         HhCounterEntity hhCounterEntity = new HhCounterEntity(UUID.randomUUID(), vacancies.found().intValue(), parameters.getText(),
                 parameters, LocalDate.now(), LocalTime.now());
