@@ -12,6 +12,7 @@ import ru.itstamag.application.dao.repository.EmploymentRepository;
 import ru.itstamag.application.dao.repository.ExperienceRepository;
 import ru.itstamag.application.service.HhCounterService;
 import ru.itstamag.application.service.ScheduleService;
+import ru.itstamag.application.service.VacancyService;
 import ru.itstamag.application.web.client.hh.HhClient;
 import ru.itstamag.application.web.client.hh.dto.DictionariesDto;
 
@@ -28,6 +29,8 @@ public class HhScheduler {
     private final EmploymentRepository employmentRepository;
 
     private final ScheduleService scheduleService;
+
+    private final VacancyService vacancyService;
 
     @Scheduled(cron = "0 0 0/6 * * ?")
     public void updateHhCounter() {
@@ -61,5 +64,14 @@ public class HhScheduler {
         DictionariesDto dictionaries = hhClient.dictionaries();
         scheduleService.saveSchedulesByDictionariesAndSave(dictionaries);
         log.info("HhScheduler.updateScheduled() completed: data = {}", dictionaries);
+    }
+
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Scheduled(cron = "0 0 12 * * ?")
+    public void updateVacancies() {
+        log.info("HhScheduler.updateVacancies() started");
+        vacancyService.createTaskToSaveVacancies();
+        log.info("HhScheduler.updateVacancies() completed");
     }
 }
