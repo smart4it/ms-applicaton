@@ -37,7 +37,7 @@ public class HhCounterService {
 
     private SearchParameters searchParameters() {
 
-        return new SearchParameters(UUID.randomUUID(), "java", null, null, null, LocalDate.now(), LocalTime.now());
+        return new SearchParameters(UUID.randomUUID(), "java NOT javaScript", null, null, null, LocalDate.now(), LocalTime.now());
     }
 
     private Map<String, String> params(SearchParameters parameters) {
